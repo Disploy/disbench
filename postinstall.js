@@ -2,7 +2,6 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
-const child_process = require("node:child_process");
 
 const ARCH_MAPPING = {
   ia32: "386",
