@@ -2,6 +2,7 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
+const child_process = require("node:child_process");
 
 const ARCH_MAPPING = {
   ia32: "386",
@@ -30,7 +31,6 @@ if (!folder) {
 }
 
 const binP = path.join(
-  __dirname,
   "dist",
   folder,
   `disbench${platform === "windows" ? ".exe" : ""}`
@@ -40,7 +40,8 @@ fs.writeFileSync(
   "disbench.js",
   [
     "const { spawn } = require('node:child_process');",
-    `spawn('${binP}', process.argv.slice(2), { stdio: 'inherit' })`,
+    "const { join } = require('node:path');",
+    `spawn(join(__dirname, ${binP}), process.argv.slice(2), { stdio: 'inherit' })`,
     ".on('exit', (code) => process.exit(code));",
   ].join("\n")
 );
