@@ -40,7 +40,7 @@ fs.writeFileSync(
   [
     "const { spawn } = require('node:child_process');",
     "const { join } = require('node:path');",
-    `spawn(join(__dirname, ${binP}), process.argv.slice(2), { stdio: 'inherit' })`,
+    `spawn(join(__dirname, '${binP}'), process.argv.slice(2), { stdio: 'inherit' })`,
     ".on('exit', (code) => process.exit(code));",
   ].join("\n")
 );
