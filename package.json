@@ -1,12 +1,12 @@
 {
   "name": "disbench",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Test the performance of Disploy",
   "scripts": {
     "postinstall": "node postinstall.js"
   },
   "bin": {
-    "disbench": "disbench"
+    "disbench": "disbench.js"
   },
   "repository": {
     "type": "git",
