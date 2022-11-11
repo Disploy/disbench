@@ -38,6 +38,7 @@ const binP = path.join(
 fs.writeFileSync(
   "disbench.js",
   [
+    "#!/usr/bin/env node",
     "const { spawn } = require('node:child_process');",
     "const { join } = require('node:path');",
     `spawn(join(__dirname, '${binP}'), process.argv.slice(2), { stdio: 'inherit' })`,
