@@ -8,6 +8,7 @@ on:
       - "package.json"
       - "yarn.lock"
       - ".github/workflows/publish.yml"
+      - "goreleaser.yml"
   workflow_dispatch:
 
 jobs:
