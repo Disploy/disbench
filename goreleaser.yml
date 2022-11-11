@@ -1,0 +1,71 @@
+before:
+  hooks:
+    - go generate ./...
+project_name: disbench
+release:
+  github:
+    owner: disploy
+    name: disbench
+builds:
+  - id: disbench-darwin-amd64
+    ldflags:
+      - -s -w -X github.com/Disploy/disbench/pkg/version.Version={{.Version}}
+    binary: disbench
+    main: ./cmd/disbench/main.go
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+  - id: disbench-darwin-arm64
+    ldflags:
+      - -s -w -X github.com/Disploy/disbench/pkg/version.Version={{.Version}}
+    binary: disbench
+    main: ./cmd/disbench/main.go
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - arm64
+  - id: disbench-linux-amd64
+    ldflags:
+      - -s -w -X github.com/Disploy/disbench/pkg/version.Version={{.Version}}
+    main: ./cmd/disbench/main.go
+    binary: disbench
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+  - id: disbench-windows-amd64
+    ldflags:
+      - -s -w -X github.com/Disploy/disbench/pkg/version.Version={{.Version}}
+    main: ./cmd/disbench/main.go
+    binary: disbench
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - windows
+    goarch:
+      - amd64
+archives:
+  - replacements:
+      darwin: darwin
+      linux: linux
+      windows: windows
+      386: i386
+      amd64: amd64
+
+checksum:
+  name_template: "{{ .ProjectName }}checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
