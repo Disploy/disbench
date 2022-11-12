@@ -1,6 +1,6 @@
 {
   "name": "disbench",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Test the performance of Disploy",
   "scripts": {
     "postinstall": "node postinstall.js"
@@ -16,14 +16,11 @@
   "bugs": {
     "url": "https://github.com/Disploy/disbench/issues"
   },
-  "goBinary": {
-    "name": "disbench",
-    "path": "./bin"
-  },
   "homepage": "https://github.com/Disploy/disbench",
   "files": [
     "dist",
-    "postinstall.js"
+    "postinstall.js",
+    "disbench.js"
   ],
   "dependencies": {}
 }
