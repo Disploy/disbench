@@ -18,6 +18,7 @@ var internalBenchmarkCmd = &cobra.Command{
 		url, _ := cmd.Flags().GetString("url")
 		githubTarget, _ := cmd.Flags().GetString("github")
 		title, _ := cmd.Flags().GetString("title")
+		debug, _ := cmd.Flags().GetBool("debug")
 		parsedGithub, err := github.ParseGitHubTarget(githubTarget)
 		githubToken := os.Getenv("GITHUB_TOKEN")
 
@@ -42,12 +43,16 @@ var internalBenchmarkCmd = &cobra.Command{
 
 			if githubToken != "" {
 				github.InitClient(githubToken)
-				_, err := github.PostComment(parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber, fmt.Sprintf("Benchmark: %s\n\n%s", title, benchmark.Markdown()))
+				response, err := github.PostComment(parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber, fmt.Sprintf("Benchmark: %s\n\n%s", title, benchmark.Markdown()))
 
 				if err != nil {
 					color.Magenta("[github] Posted benchmark results to %s/%s#%d", parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber)
 				} else {
 					color.Red("[github] Failed to post benchmark results to %s/%s#%d: %s", parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber, err)
+				}
+
+				if debug {
+					fmt.Printf("[github] response: %+v", response)
 				}
 			}
 		}
@@ -61,4 +66,5 @@ func init() {
 	internalBenchmarkCmd.Flags().StringP("url", "u", "", "The URL to send the benchmark request to.")
 	internalBenchmarkCmd.Flags().StringP("github", "g", "", "The GitHub target to post the benchmark results to formatted as <owner>/<repo>#<issue number>.")
 	internalBenchmarkCmd.Flags().StringP("title", "t", "Untitled benchmark", "The title of the benchmark.")
+	internalBenchmarkCmd.Flags().BoolP("debug", "d", false, "Enable debug mode.")
 }
