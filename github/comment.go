@@ -11,11 +11,17 @@ func PostComment(
 	repo string,
 	issueNumber int,
 	comment string,
-) {
+) (*github.Response, error) {
 	ctx := context.Background()
 	client := GetClient()
 
-	client.Issues.CreateComment(ctx, owner, repo, issueNumber, &github.IssueComment{
+	_, res, err := client.Issues.CreateComment(ctx, owner, repo, issueNumber, &github.IssueComment{
 		Body: &comment,
 	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }

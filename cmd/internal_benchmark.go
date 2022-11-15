@@ -42,8 +42,13 @@ var internalBenchmarkCmd = &cobra.Command{
 
 			if githubToken != "" {
 				github.InitClient(githubToken)
-				github.PostComment(parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber, fmt.Sprintf("Benchmark: %s\n\n%s", title, benchmark.Markdown()))
-				color.Magenta("[github] Posted benchmark results to %s/%s#%d", parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber)
+				_, err := github.PostComment(parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber, fmt.Sprintf("Benchmark: %s\n\n%s", title, benchmark.Markdown()))
+
+				if err != nil {
+					color.Magenta("[github] Posted benchmark results to %s/%s#%d", parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber)
+				} else {
+					color.Red("[github] Failed to post benchmark results to %s/%s#%d: %s", parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber, err)
+				}
 			}
 		}
 	},
