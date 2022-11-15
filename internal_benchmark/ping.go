@@ -74,5 +74,19 @@ func ExecutePingBenchmark(
 		fmt.Printf("  %s: %s\n", color.HiMagentaString("Total"), color.HiGreenString("%fms", float64(totalDuration.Milliseconds())))
 	}
 
+	benchmark.Markdown = func() string {
+		return fmt.Sprintf(
+			"## `/ping` Command Benchmark\n\n"+
+				"| Iterations | Successes | Errors | Average | Total |\n"+
+				"| --- | --- | --- | --- | --- |\n"+
+				"| %d | %d | %d | %fms | %fms |\n",
+			benchmark.Iterations,
+			benchmark.Successes,
+			benchmark.Errors,
+			benchmark.Average,
+			float64(totalDuration.Milliseconds()),
+		)
+	}
+
 	return benchmark
 }

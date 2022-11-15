@@ -9,4 +9,5 @@ type Benchmark struct {
 	Durations  []time.Duration
 	Average    float64
 	Print      func()
+	Markdown   func() string
 }
