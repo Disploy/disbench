@@ -13,6 +13,7 @@ import (
 
 func ExecutePingBenchmark(
 	iterations int,
+	timeBetween float32,
 	url string,
 	expectedContent string,
 ) Benchmark {
@@ -56,6 +57,10 @@ func ExecutePingBenchmark(
 
 		benchmark.Successes++
 		benchmark.Durations = append(benchmark.Durations, duration)
+
+		if timeBetween > 0 {
+			time.Sleep(time.Duration(timeBetween) * time.Second)
+		}
 	}
 
 	var totalDuration time.Duration

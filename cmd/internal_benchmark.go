@@ -19,6 +19,7 @@ var internalBenchmarkCmd = &cobra.Command{
 		githubTarget, _ := cmd.Flags().GetString("github")
 		title, _ := cmd.Flags().GetString("title")
 		debug, _ := cmd.Flags().GetBool("debug")
+		timeBetween, _ := cmd.Flags().GetFloat32("timebetween")
 		parsedGithub, err := github.ParseGitHubTarget(githubTarget)
 		githubToken := os.Getenv("GITHUB_TOKEN")
 
@@ -36,7 +37,7 @@ var internalBenchmarkCmd = &cobra.Command{
 			iterations = 1
 		}
 
-		var benchmarks = internal_benchmark.Start(iterations, url)
+		var benchmarks = internal_benchmark.Start(iterations, timeBetween, url)
 
 		for _, benchmark := range benchmarks {
 			benchmark.Print()
@@ -67,4 +68,5 @@ func init() {
 	internalBenchmarkCmd.Flags().StringP("github", "g", "", "The GitHub target to post the benchmark results to formatted as <owner>/<repo>#<issue number>.")
 	internalBenchmarkCmd.Flags().StringP("title", "t", "Untitled benchmark", "The title of the benchmark.")
 	internalBenchmarkCmd.Flags().BoolP("debug", "d", false, "Enable debug mode.")
+	internalBenchmarkCmd.Flags().Float32P("timebetween", "b", 0, "The time in seconds to wait between each request.")
 }

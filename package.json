@@ -1,6 +1,6 @@
 {
   "name": "disbench",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "Test the performance of Disploy",
   "scripts": {
     "postinstall": "node postinstall.js"
