@@ -23,11 +23,6 @@ var internalBenchmarkCmd = &cobra.Command{
 		parsedGithub, err := github.ParseGitHubTarget(githubTarget)
 		githubToken := os.Getenv("GITHUB_TOKEN")
 
-		if err != nil {
-			fmt.Printf("client: could not parse GitHub target: %s\n", err)
-			os.Exit(1)
-		}
-
 		if url == "" {
 			cmd.Help()
 			return
@@ -43,6 +38,11 @@ var internalBenchmarkCmd = &cobra.Command{
 			benchmark.Print()
 
 			if githubToken != "" {
+				if err != nil {
+					fmt.Printf("client: could not parse GitHub target: %s\n", err)
+					os.Exit(1)
+				}
+
 				github.InitClient(githubToken)
 				response, err := github.PostComment(parsedGithub.Owner, parsedGithub.Repo, parsedGithub.IssueNumber, fmt.Sprintf("Benchmark: %s\n\n%s", title, benchmark.Markdown()))
 
